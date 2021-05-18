@@ -1,5 +1,5 @@
 {
-  "name": "ventus-dashboard",
+  "name": "ventus-uva",
   "version": "1.0.0",
   "description": "A weather dashboard to view current and history weather data from a personal weather station",
   "main": "app.js",
