@@ -43,11 +43,13 @@ axios.get('https://api.weather.com/v2/pws/observations/current', {
 
 });
 
-app.get('/next', function (req, res) {
-    res.render('next', {
-        nextItem: 'This is a next item.'
-    });
-  });
+// Hide this for now. 
+
+// app.get('/next', function (req, res) {
+//     res.render('next', {
+//         nextItem: 'This is a next item.'
+//     });
+//   });
 
 app.listen(port, function () {
   console.log(`Ventus - Uva Weather stattion listening on port ${port}`);
