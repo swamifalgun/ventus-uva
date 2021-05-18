@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    
+    header Ventus - Uva Weather Station
+
+    .main-content
+        
+        .left-column
+            .temp-label Temperature
+            .temp= observations.metric.temp + "°C"
+        .right-column
+            .small-card
+                .small-card-title Country
+                .small-card-value= observations.country
+            .small-card
+                .small-card-title Humidity (%)
+                .small-card-value= observations.humidity 
+            .small-card
+                .small-card-title Heat Index
+                .small-card-value= observations.metric.heatIndex
+            .small-card
+                .small-card-title Dew Point (°C)
+                .small-card-value= observations.metric.dewpt
+            .small-card
+                .small-card-title Wind Chill
+                .small-card-value= observations.metric.windChill
+            .small-card
+                .small-card-title Wind Speed (km/h)
+                .small-card-value= observations.metric.windSpeed
