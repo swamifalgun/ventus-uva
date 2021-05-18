@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <h1 v-if="weather">{{weather}}</h1>
-    <p v-if="error">{{error}}</p> -->
-
     <div class="header">
       Ventus - Uva Weather Station
     </div> 
