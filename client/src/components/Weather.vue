@@ -4,7 +4,7 @@
       Ventus - Uva Weather Station
     </div> 
 
-    <div class="main-content">
+    <div v-if="weather" class="main-content">
 
       <div class="left-column">
         <div class="temp-label">
