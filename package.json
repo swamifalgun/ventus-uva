@@ -1,0 +1,18 @@
+{
+  "name": "ventus-dashboard",
+  "version": "1.0.0",
+  "description": "A weather dashboard to view current and history weather data from a personal weather station",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "falgun swami",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "engines": {
+    "node": "12.0.0"
+  }
+}
