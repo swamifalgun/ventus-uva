@@ -11,8 +11,10 @@
           Temperature
         </div>
         <div class="temp">
-          {{weather.metric.temp}} °C
+          <span class="temp-value">{{weather.metric.temp}}</span>
+          <span class="degree">°C</span>
         </div>
+        
       </div>
 
       <div class="right-column">
@@ -146,6 +148,7 @@ header {
     height: 70vh;
     padding: 30px 30px 30px 30px;
     border-radius: 15px 0 0 15px;
+    justify-content: center;
 }
 
 .card {
@@ -186,10 +189,23 @@ header {
 }
 
 .temp {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.temp-value {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 60px;
+    font-size: 100px;
     font-weight: bold;
 }
+
+.degree {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 50px;
+    font-weight: bold;
+}
+
 .temp-label {
     font-family: 'Courier New', Courier, monospace;
     color: #A4A6Ac;
