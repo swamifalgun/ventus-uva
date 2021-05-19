@@ -5,7 +5,6 @@
   "main": "app.js",
   "scripts": {
     "start": "node server/app.js",
-    "build": "npm install --prefix client && npm run build --prefix client"
   },
   "author": "falgun swami",
   "license": "ISC",
