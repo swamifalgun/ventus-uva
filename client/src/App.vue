@@ -16,13 +16,17 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0px;
+}
 #app {
   font-family: 'Courier New', Courier, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #1E1714;
-  margin-top: 60px;
+  /* margin-top: 60px; */
   font-size: 32px;
+  margin: 0px !important;
 }
 </style>

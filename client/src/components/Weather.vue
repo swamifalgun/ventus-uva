@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div class="canvas">
     <div class="header">
       Ventus - Uva Weather Station
     </div> 
 
-    <div v-if="weather" class="main-content">
+    <div v-if="getWeather" class="main-content">
 
       <div class="left-column">
         <div class="temp-label">
           Temperature
         </div>
         <div class="temp">
-          <span class="temp-value">{{weather.metric.temp}}</span>
+          <span class="temp-value">{{getWeather.metric.temp}}</span>
           <span class="degree">°C</span>
         </div>
         
@@ -23,7 +23,7 @@
             Country
           </div>
           <div class="small-card-value">
-            {{weather.country}}
+            {{getWeather.country}}
           </div>
         </div>
 
@@ -32,7 +32,7 @@
             Humidity (%)
           </div>
           <div class="small-card-value">
-            {{weather.humidity}}
+            {{getWeather.humidity}}
           </div>
         </div>
 
@@ -41,7 +41,7 @@
             Heat Index
           </div>
           <div class="small-card-value">
-            {{weather.metric.heatIndex}}
+            {{getWeather.metric.heatIndex}}
           </div>
         </div>    
 
@@ -50,7 +50,7 @@
             Dew Point (°C)
           </div>
           <div class="small-card-value">
-            {{weather.metric.dewpt}}
+            {{getWeather.metric.dewpt}}
           </div>
         </div>  
 
@@ -59,7 +59,7 @@
             Wind Chill
           </div>
           <div class="small-card-value">
-            {{weather.metric.windChill}}
+            {{getWeather.metric.windChill}}
           </div>
         </div>  
 
@@ -68,11 +68,14 @@
             Wind Speed (km/h)
           </div>
           <div class="small-card-value">
-            {{weather.metric.windSpeed}}
+            {{getWeather.metric.windSpeed}}
           </div>
         </div>  
 
       </div>
+    </div>
+    <div class="loading" v-else>
+      <span class="loadingText">Loading weather...</span>
     </div>
   </div>
   
@@ -80,30 +83,40 @@
 </template>
 
 <script>
-
-import WeatherService from '../WeatherService';
-
+import { mapState } from 'vuex';
 
 export default {
   name: 'Weather',
 
   data () {
     return  {
-      weather : null,
+      // weather : null,
       error: ''
     }
   },
-  async created() {
-    try {
-      this.weather = await WeatherService.getWeather();
-    } catch (error) {
-      this.error = error;
-    }
+  computed: {
+    ...mapState(['observation']),
+
+    getWeather() {
+      return this.$store.getters.observation}
+  },
+  // async created() {
+  //   try {
+  //     await WeatherService.getWeather();
+  //     // this.$store.dispatch("getWeather", weather)
+  //   } catch (error) {
+  //     this.error = error;
+  //   }
+  // }
+
+  created () {
+    setInterval(() => {
+      this.$store.dispatch('fetchWeather')
+    }, 3000)
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 body {
     background-color: #fff;
@@ -114,7 +127,7 @@ body {
     height: 100vh;
 }
 
-header {
+.header {
     background-color: #A4A6Ac;
     font-size: 32px;
     font-weight: bold;
@@ -167,7 +180,9 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+}
+.small-card:hover {
+  box-shadow: 0 0 15px #A4A6Ac;
 }
 
 .small-card-value {
@@ -211,5 +226,25 @@ header {
     color: #A4A6Ac;
     font-weight: bold;
     font-size: 32px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.loadingText {
+  font-family: 'Courier New', Courier, monospace;
+  color: #1E1714;
+  font-size: 36px;
+}
+
+.canvas {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  vertical-align: center;
 }
 </style>
