@@ -112,7 +112,7 @@ export default {
   created () {
     setInterval(() => {
       this.$store.dispatch('fetchWeather')
-    }, 3000)
+    }, 10000)
   }
 }
 </script>
