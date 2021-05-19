@@ -4,7 +4,7 @@
   "description": "A weather dashboard to view current and history weather data from a personal weather station",
   "main": "app.js",
   "scripts": {
-    "start": "node server/app.js",
+    "start": "node server/app.js"
   },
   "author": "falgun swami",
   "license": "ISC",
