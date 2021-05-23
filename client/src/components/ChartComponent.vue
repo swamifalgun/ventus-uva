@@ -4,7 +4,6 @@
      <fusioncharts
        type="spline"
        dataformat="json"  
-       height="100%"
        width= "100%"     
        dataEmptyMessage="i-https://i.postimg.cc/R0QCk9vV/Rolling-0-9s-99px.gif"
        dataEmptyMessageImageScale=39

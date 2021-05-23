@@ -288,6 +288,7 @@ body {
 }
 
 .graph {
-
+  /* height: 300px; */
+  /* padding-bottom: 20px; */
 }
 </style>
