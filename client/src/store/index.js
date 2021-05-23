@@ -7,18 +7,25 @@ Vue.use(Vuex);
 
 
 const state = {
-    observation : null
+    observation : null,
+    dayObservations : []
 }
 
 let mutations = {
     setWeather(state, data) {
         state.observation = data
+    },
+    setWeatherObservations(state, data) {
+        state.dayObservations = data
     }
 }
 
 let getters = {
     observation() {
         return state.observation;
+    },
+    observations() {
+        return state.dayObservations;
     }
 }
 
@@ -29,6 +36,13 @@ const actions = {
         promise.then(weather => {
             data = weather
             context.commit('setWeather', data)
+        });
+    },
+    fetchWeatherObservations(context, data) {
+        const promise = WeatherService.getDailyObservations();
+        promise.then(weather => {
+            data = weather
+            context.commit('setWeatherObservations', data)
         });
     }
 }

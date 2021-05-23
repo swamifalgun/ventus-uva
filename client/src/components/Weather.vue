@@ -5,7 +5,6 @@
     </div> 
 
     <div v-if="getWeather" class="main-content">
-
       <div class="left-column">
         <div class="temp-label">
           Temperature
@@ -18,59 +17,71 @@
       </div>
 
       <div class="right-column">
-        <div class="small-card">
-          <div class="small-card-title">
-            Country
+
+        <div class="nav">
+          <a class="today">Today</a>
+          <a class="thisWeek">This week</a>
+        </div>
+
+        <div class="metric">
+          <div class="small-card">
+            <div class="small-card-title">
+              Country
+            </div>
+            <div class="small-card-value">
+              {{getWeather.country}}
+            </div>
           </div>
-          <div class="small-card-value">
-            {{getWeather.country}}
+
+          <div class="small-card">
+            <div class="small-card-title">
+              Humidity (%)
+            </div>
+            <div class="small-card-value">
+              {{getWeather.humidity}}
+            </div>
+          </div>
+
+          <div class="small-card">
+            <div class="small-card-title">
+              Heat Index
+            </div>
+            <div class="small-card-value">
+              {{getWeather.metric.heatIndex}}
+            </div>
+          </div>    
+
+          <div class="small-card">
+            <div class="small-card-title">
+              Dew Point (°C)
+            </div>
+            <div class="small-card-value">
+              {{getWeather.metric.dewpt}}
+            </div>
+          </div>  
+
+          <div class="small-card">
+            <div class="small-card-title">
+              Wind Chill
+            </div>
+            <div class="small-card-value">
+              {{getWeather.metric.windChill}}
+            </div>
+          </div>  
+
+          <div class="small-card">
+            <div class="small-card-title">
+              Wind Speed (km/h)
+            </div>
+            <div class="small-card-value">
+              {{getWeather.metric.windSpeed}}
+            </div>
           </div>
         </div>
 
-        <div class="small-card">
-          <div class="small-card-title">
-            Humidity (%)
-          </div>
-          <div class="small-card-value">
-            {{getWeather.humidity}}
-          </div>
+        <div class="graph">
+          <chart-component :tempVar="getWeatherObservations" />
         </div>
-
-        <div class="small-card">
-          <div class="small-card-title">
-            Heat Index
-          </div>
-          <div class="small-card-value">
-            {{getWeather.metric.heatIndex}}
-          </div>
-        </div>    
-
-        <div class="small-card">
-          <div class="small-card-title">
-            Dew Point (°C)
-          </div>
-          <div class="small-card-value">
-            {{getWeather.metric.dewpt}}
-          </div>
-        </div>  
-
-        <div class="small-card">
-          <div class="small-card-title">
-            Wind Chill
-          </div>
-          <div class="small-card-value">
-            {{getWeather.metric.windChill}}
-          </div>
-        </div>  
-
-        <div class="small-card">
-          <div class="small-card-title">
-            Wind Speed (km/h)
-          </div>
-          <div class="small-card-value">
-            {{getWeather.metric.windSpeed}}
-          </div>
-        </div>  
 
       </div>
     </div>
@@ -84,8 +95,9 @@
 
 <script>
 import { mapState } from 'vuex';
-
+import ChartComponent from './ChartComponent.vue';
 export default {
+  components: { ChartComponent },
   name: 'Weather',
 
   data () {
@@ -98,8 +110,11 @@ export default {
     ...mapState(['observation']),
 
     getWeather() {
-      return this.$store.getters.observation}
+      return this.$store.getters.observation},
+    getWeatherObservations() {
+      return this.$store.getters.observations},
   },
+
   // async created() {
   //   try {
   //     await WeatherService.getWeather();
@@ -112,6 +127,10 @@ export default {
   created () {
     setInterval(() => {
       this.$store.dispatch('fetchWeather')
+    }, 10000)
+
+    setInterval(() => {
+      this.$store.dispatch('fetchWeatherObservations')
     }, 10000)
   }
 }
@@ -142,13 +161,33 @@ body {
     box-shadow: 0 0 13px #A4A6Ac;
 }
 
+.metric {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.2;
+}
+
+.thisWeek {
+  padding-left: 20px;
+}
+
 .right-column {
     display: flex;
     flex: 4;
     flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: #F6F6F7;
-    height: 70vh;
+    height: 80vh;
     padding: 30px 30px 30px 30px;
     border-radius: 0 15px 15px 0;
 
@@ -158,7 +197,7 @@ body {
     flex-direction: column;
     flex: 1;
     background-color: #fff;
-    height: 70vh;
+    height: 80vh;
     padding: 30px 30px 30px 30px;
     border-radius: 15px 0 0 15px;
     justify-content: center;
@@ -246,5 +285,9 @@ body {
   flex-direction: column;
   justify-content: center;
   vertical-align: center;
+}
+
+.graph {
+
 }
 </style>
