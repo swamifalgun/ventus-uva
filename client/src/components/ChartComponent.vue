@@ -91,7 +91,7 @@ export default {
 
     for(const hour in sortedObj) {
         var dataObject = {
-            label: sortedObj[hour][0],
+            label: sortedObj[hour][0] + ':00',
             value: Math.round(sortedObj[hour][1])
         };
         data.push(dataObject);
