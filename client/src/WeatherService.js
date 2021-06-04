@@ -27,6 +27,22 @@ class WeatherService {
         }
         return response.data.observations
     }
+
+    static async getPreviousObservations(date) {
+
+
+        console.log('date from weather service ', date)
+        let response;
+        try  {
+            response = await axios.get(`api/weather/previous-observations`, {params: {
+                date
+            }});
+        }catch (e) {
+            console.log(`Error fetching weather : ${e}`);
+            // reject(e);
+        }
+        return response.data.observations
+    }
 }
 
 export default WeatherService;

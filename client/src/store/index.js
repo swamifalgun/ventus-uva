@@ -8,7 +8,8 @@ Vue.use(Vuex);
 
 const state = {
     observation : null,
-    dayObservations : []
+    dayObservations : [],
+    previousObservations : []
 }
 
 let mutations = {
@@ -17,6 +18,9 @@ let mutations = {
     },
     setWeatherObservations(state, data) {
         state.dayObservations = data
+    },
+    setPreviousObservations(state,data) {
+        state.previousObservations = data
     }
 }
 
@@ -26,7 +30,10 @@ let getters = {
     },
     observations() {
         return state.dayObservations;
-    }
+    },
+    olderObservations() {
+        return state.previousObservations
+    } 
 }
 
 const actions = {
@@ -43,6 +50,20 @@ const actions = {
         promise.then(weather => {
             data = weather
             context.commit('setWeatherObservations', data)
+        });
+    },
+    previousObservations(context, data) {
+
+        console.log('date from actions ', data)
+        
+        const date = data.split('-').join('');
+        
+        console.log('formateed date ', date)
+
+        const promise = WeatherService.getPreviousObservations(date);
+        promise.then(weather => {
+            data = weather
+            context.commit('setPreviousObservations', data)
         });
     }
 }

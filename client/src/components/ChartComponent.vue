@@ -57,55 +57,7 @@ export default {
  },
  methods: {
    setChartData: function() {
-
-
-    // Group data by hour   
-    const hourGroup = this.tempVar.reduce((groups, game) => {
-        const date = game.obsTimeLocal.split(' ')[1].split(':')[0];
-        if (!groups[date]) {
-            groups[date] = [];
-        }
-        groups[date].push(game);
-        return groups;
-    }, {});
-
-
-    for (const property in hourGroup) {
-        var avgBucket = [];
-
-        const groupedObservations = hourGroup[property];
-
-        groupedObservations.forEach(element => {
-            avgBucket.push(element.metric.tempAvg)
-            avgBucket / avgBucket.length
-        });
-
-        const length = avgBucket.length;
-        const finalAvg =  avgBucket.reduce((a, b) => a + b, 0)
-        hourGroup[property] = finalAvg / length
-    }
-
-    const sortedObj = Object.entries(hourGroup).sort((a,b) => a[0]-b[0]);
-
-    var data = [];
-
-    for(const hour in sortedObj) {
-        var dataObject = {
-            label: sortedObj[hour][0] + ':00',
-            value: Math.round(sortedObj[hour][1])
-        };
-        data.push(dataObject);
-    }
-
-
-    // for (var i = 0; i < this.tempVar.length; i++) {
-    //     var dataObject = {
-    //         label: formatDate(this.tempVar[i].obsTimeLocal),
-    //         value: this.tempVar[i].metric.tempAvg
-    // };
-    //     data.push(dataObject);
-    // }
-    this.tempChartData.data = data;
+    this.tempChartData.data = this.tempVar;
    },
  },
  mounted: function() {

@@ -19,8 +19,12 @@
       <div class="right-column">
 
         <div class="nav">
-          <a class="today">Today</a>
-          <a class="thisWeek">This week</a>
+          <a class="today">Today </a>
+          <span class="text"> or</span>
+          <span class="text"> get weather for </span>
+          <date-picker v-model="date" valueType="format" :disabled-date="(date) => date >= new Date()"></date-picker>
+          <button class="button" v-on:click="getDayObservation"> Get Observations</button> 
+
         </div>
 
         <div class="metric">
@@ -96,14 +100,18 @@
 <script>
 import { mapState } from 'vuex';
 import ChartComponent from './ChartComponent.vue';
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+
 export default {
-  components: { ChartComponent },
+  components: { ChartComponent, DatePicker, },
   name: 'Weather',
 
   data () {
     return  {
       // weather : null,
-      error: ''
+      error: '',
+      date: null,
     }
   },
   computed: {
@@ -113,6 +121,9 @@ export default {
       return this.$store.getters.observation},
     getWeatherObservations() {
       return this.$store.getters.observations},
+    getWeatherPreviousObservations() {
+      return this.$ßtore.getters.olderObservations
+    },
   },
 
   // async created() {
@@ -131,7 +142,13 @@ export default {
 
     setInterval(() => {
       this.$store.dispatch('fetchWeatherObservations')
-    }, 10000)
+    }, 10000) //10000
+  },
+  methods: {
+    getDayObservation : function () {
+      // let formatDate = this.date.split('-').join()
+      this.$store.dispatch('previousObservations', this.date)
+    }
   }
 }
 </script>
@@ -171,6 +188,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  align-items: baseline;
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.2;
@@ -287,8 +305,20 @@ body {
   vertical-align: center;
 }
 
-.graph {
-  /* height: 300px; */
-  /* padding-bottom: 20px; */
+.text {
+  margin-left: 5px;
+}
+.mx-datepicker {
+  margin-left: 5px;
+  border: 1px solid white;
+}
+
+.button {
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid white;
+  height: 40px;
+  box-shadow: 0 0 15px #A4A6Ac;
+  margin-left: 5px;
 }
 </style>
