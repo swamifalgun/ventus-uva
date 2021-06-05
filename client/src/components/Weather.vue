@@ -7,7 +7,7 @@
     <div v-if="getWeather" class="main-content">
       <div class="left-column">
         <div class="temp-label">
-          Temperature
+          Current Temperature
         </div>
         <div class="temp">
           <span class="temp-value">{{getWeather.metric.temp}}</span>
@@ -19,15 +19,14 @@
       <div class="right-column">
 
         <div class="nav">
-          <a class="today">Today </a>
+          <a v-on:click="getToday" class="today">Today</a>
           <span class="text"> or</span>
-          <span class="text"> get weather for </span>
-          <date-picker v-model="date" valueType="format" :disabled-date="(date) => date >= new Date()"></date-picker>
+          <span class="text"> Get weather for </span>
+          <date-picker v-model="date" valueType="format" placeholder="YYYY-MM-DD" :disabled-date="(date) => date >= new Date()"></date-picker>
           <button class="button" v-on:click="getDayObservation"> Get Observations</button> 
-
         </div>
 
-        <div class="metric">
+        <div v-if="showCurrent" class="metric">
           <div class="small-card">
             <div class="small-card-title">
               Country
@@ -83,9 +82,19 @@
           </div>
         </div>
 
-        <div class="graph">
+        <div v-else></div>
+
+        <div v-if="showCurrent" class="graph">
           <chart-component :tempVar="getWeatherObservations" />
         </div>
+
+        <div v-else-if="!showCurrent && getWeatherPreviousObservations.length > 0" class="oldGraph">
+          <chart-component :tempVar="getWeatherPreviousObservations" />
+        </div>
+        <div v-else>
+          <h3>No weather data from this date available. Please select a date later than 2021-06-03.</h3>
+        </div>
+
 
       </div>
     </div>
@@ -112,6 +121,7 @@ export default {
       // weather : null,
       error: '',
       date: null,
+      showCurrent: true
     }
   },
   computed: {
@@ -122,7 +132,7 @@ export default {
     getWeatherObservations() {
       return this.$store.getters.observations},
     getWeatherPreviousObservations() {
-      return this.$ßtore.getters.olderObservations
+      return this.$store.getters.olderObservations
     },
   },
 
@@ -147,7 +157,11 @@ export default {
   methods: {
     getDayObservation : function () {
       // let formatDate = this.date.split('-').join()
+      this.showCurrent = false
       this.$store.dispatch('previousObservations', this.date)
+    },
+    getToday : function () {
+      this.showCurrent = true
     }
   }
 }
@@ -192,6 +206,13 @@ body {
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.2;
+}
+.today {
+  cursor: pointer;
+}
+
+.today :hover {
+  cursor: pointer !important;
 }
 
 .thisWeek {

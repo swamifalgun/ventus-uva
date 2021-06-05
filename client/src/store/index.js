@@ -53,13 +53,7 @@ const actions = {
         });
     },
     previousObservations(context, data) {
-
-        console.log('date from actions ', data)
-        
         const date = data.split('-').join('');
-        
-        console.log('formateed date ', date)
-
         const promise = WeatherService.getPreviousObservations(date);
         promise.then(weather => {
             data = weather

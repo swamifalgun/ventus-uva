@@ -96,11 +96,13 @@ router.get('/day-observations', async (req, res) => {
   var finalData = [];
 
   for(const hour in sortedObj) {
-    var dataObject = {
+    if (sortedObj[hour][0] != undefined && sortedObj[hour][1] != NaN) {
+      var dataObject = {
         label: sortedObj[hour][0] + ':00',
         value: Math.round(sortedObj[hour][1])
-    };
-    finalData.push(dataObject);
+      };
+      finalData.push(dataObject);
+    } else {}
   }
 
   db.ref(finalDate).set({finalData});
@@ -132,7 +134,12 @@ router.get(`/previous-observations`, async (req, res) => {
   var ref = db.ref(joinedDate)
   
   ref.on('value', (snapshot) => {
-    console.log(snapshot.val());
+    if (snapshot.val()) {
+      res.send({observations : snapshot.val()})
+    } else {
+      res.send({observations : {'finalData' : []}})
+    }
+
   }, (errorObject) => {
     console.log('The read failed: ' + errorObject.name);
   }); 
