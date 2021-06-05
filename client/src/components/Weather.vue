@@ -19,7 +19,7 @@
       <div class="right-column">
 
         <div class="nav">
-          <a v-on:click="getToday" class="today">Today</a>
+          <button v-on:click="getToday" class="button">Today</button>
           <span class="text"> or</span>
           <span class="text"> Get weather for </span>
           <date-picker v-model="date" valueType="format" placeholder="YYYY-MM-DD" :disabled-date="(date) => date >= new Date()"></date-picker>
@@ -327,10 +327,10 @@ body {
 }
 
 .text {
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .mx-datepicker {
-  margin-left: 5px;
+  margin: 0 5px 0 5px;
   border: 1px solid white;
 }
 
@@ -341,5 +341,7 @@ body {
   height: 40px;
   box-shadow: 0 0 15px #A4A6Ac;
   margin-left: 5px;
+  width: 150px;
+  cursor: pointer;
 }
 </style>
